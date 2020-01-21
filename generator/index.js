@@ -2,7 +2,7 @@ module.exports = (api, options, rootOptions) => {
   const eslintConfig = require("../eslintOptions").config(api);
   const pkg = {
     scripts: {
-      test: "vue-cli-service  command"
+      test: "vue-cli-service command"
     },
     name: options.projectName,
     version: options.projectVersion,
@@ -16,7 +16,7 @@ module.exports = (api, options, rootOptions) => {
     },
     browserslist: ["> 1%", "last 2 versions"]
   };
-  // 修改 `package.json` 里的字段
+  // 修改 `package.json` 里的字段 
   const lintConfig = {
     airbnb: () => {
       eslintConfig.extends.push("@vue/airbnb");
@@ -44,12 +44,6 @@ module.exports = (api, options, rootOptions) => {
   if (options.lint) {
     lintConfig[options.eslintConfig]();
   }
-  // if (options.vuex) {
-  //   Object.assign(pkg.dependencies, {
-  //     vuex: "^3.1.2"
-  //   });
-  // }
-
   api.extendPackage(pkg);
   // 删除vue-cli-service 提供的template
   api.render(files => {
@@ -59,18 +53,14 @@ module.exports = (api, options, rootOptions) => {
         delete files[path];
       });
   });
-  if (options.vuex && !api.hasPlugin('vuex')) {
-    require('./addVuex')(api)
+  if (options.vuex && !api.hasPlugin("vuex")) {
+    require("./addVuex")(api);
   }
   /* 复制并用 ejs 渲染 `./template` 内所有的文件
    * 可使用 ejs 模板语法
    * 根据自定义模板生成项目结构
    */
   api.render("../template");
-  // if (options.vuex) {
-  //   const addVuex = require("./vuex");
-  //   addVuex(api);
-  // }
   // if (options.vueRouter) {
   //   Object.assign(rootOptions, {
   //     vueRouter: options.vueRouter
